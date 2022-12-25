@@ -1,0 +1,5 @@
+#include "rdf.dl"
+#include "rdfs.dl"
+
+.input triple(filename="out.csv", rfc4180=true)
+.printsize triple

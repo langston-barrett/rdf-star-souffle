@@ -1,0 +1,24 @@
+#define RDF(s) cat("https://www.w3.org/1999/02/22-rdf-syntax-ns#", s)
+
+.type IRI <: symbol
+.type Literal <: symbol
+.type Triple <: symbol
+.type Subject = IRI | Triple
+.type Term = Literal | IRI | Triple
+
+.decl triple(sub: Subject, pred: IRI, obj: Term)
+
+// --------------------------------------------------------
+// Axioms
+// --------------------------------------------------------
+
+// rdf:type rdf:type rdf:Property .
+// rdf:subject rdf:type rdf:Property .
+// rdf:predicate rdf:type rdf:Property .
+// rdf:object rdf:type rdf:Property .
+// rdf:first rdf:type rdf:Property .
+// rdf:rest rdf:type rdf:Property .
+// rdf:value rdf:type rdf:Property .
+// rdf:nil rdf:type rdf:List .
+
+triple(RDF("type"), RDF("type"), RDF("property")).

@@ -1,0 +1,5 @@
+*.csv
+*.nt
+*.ttl
+
+/target

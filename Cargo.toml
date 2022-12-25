@@ -1,0 +1,11 @@
+[package]
+name = "rdf-star-facts"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4.0", features = ["derive"] }
+csv = "1"
+rio_api = "0.8"
+rio_turtle = "0.8"
