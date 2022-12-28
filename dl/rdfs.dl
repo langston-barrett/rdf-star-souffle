@@ -2,14 +2,23 @@
 
 // rdfs:domain rdfs:range rdfs:Resource rdfs:Literal rdfs:Datatype rdfs:Class rdfs:subClassOf rdfs:subPropertyOf rdfs:member rdfs:Container rdfs:ContainerMembershipProperty rdfs:comment rdfs:seeAlso rdfs:isDefinedBy rdfs:label
 
-.decl comment(s: Subject, t: Term)
+.decl comment(s: Subject, t: Term) inline
 comment(s, t) :- triple(s, RDFS("comment"), t).
 
-.decl label(s: Subject, t: Term)
+.decl domain(s: Subject, t: Term) inline
+domain(s, t) :-  triple(s, RDFS("domain"), t).
+
+.decl label(s: Subject, t: Term) inline
 label(s, t) :- triple(s, RDFS("label"), t).
 
-.decl subClassOf(s: Subject, t: Term)
-subClassOf(s, t) :-  triple(s, RDFS("subClassOf"), t).
+.decl range_(s: Subject, t: Term) inline
+range_(s, t) :- triple(s, RDFS("range"), t).
+
+.decl subClassOf(s: Subject, t: Term) inline
+subClassOf(s, t) :- triple(s, RDFS("subClassOf"), t).
+
+.decl subPropertyOf(s: Subject, t: Term) inline
+subPropertyOf(s, t) :- triple(s, RDFS("subPropertyOf"), t).
 
 // --------------------------------------------------------
 // Axioms
@@ -57,3 +66,31 @@ subClassOf(s, t) :-  triple(s, RDFS("subClassOf"), t).
 // rdfs:isDefinedBy rdfs:subPropertyOf rdfs:seeAlso .
 //
 // rdfs:Datatype rdfs:subClassOf rdfs:Class .
+
+// --------------------------------------------------------
+// Entailment
+// --------------------------------------------------------
+//
+// https://www.w3.org/TR/rdf11-mt/
+
+.decl rdfs_entailed(subj: Subject, pred: IRI, obj: Term)
+triple(subj, pred, obj) :- rdfs_entailed(subj, pred, obj).
+
+// rdfD2
+
+rdfs_entailed(pred, RDF("type"), RDF("Property")) :-
+  triple(_, pred, _).
+
+// rdfs1
+// rdfs2
+// rdfs3
+// rdfs4
+// rdfs5
+// rdfs6
+// rdfs7
+// rdfs8
+// rdfs9
+
+rdfs_entailed(instance, RDF("type"), superclass) :-
+  subClassOf(subclass, superclass),
+  triple(instance, RDF("type"), subclass).

@@ -1,0 +1,24 @@
+#define OWL(s) cat("http://www.w3.org/2002/07/owl#", s)
+
+.decl equivalentProperty(s: Subject, t: Term) inline
+equivalentProperty(s, t) :- triple(s, OWL("equivalentProperty"), t).
+
+// --------------------------------------------------------
+// Entailment
+// --------------------------------------------------------
+//
+// https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
+
+.decl owl_entailed(subj: Term, pred: Term, obj: Term)
+triple(as(subj, Subject), as(pred, IRI), obj) :- 
+  owl_entailed(subj, pred, obj).
+
+// prp-eqp1
+owl_entailed(subj, prop2, obj) :-
+  equivalentProperty(prop1, prop2),
+  triple(subj, prop1, obj).
+
+// prp-eqp2
+owl_entailed(subj, prop1, obj) :-
+  equivalentProperty(prop1, prop2),
+  triple(subj, prop2, obj).

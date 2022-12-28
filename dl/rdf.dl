@@ -8,6 +8,9 @@
 
 .decl triple(sub: Subject, pred: IRI, obj: Term)
 
+.decl type(s: Subject, t: Term) inline
+type(s, t) :-  triple(s, RDF("type"), t).
+
 // --------------------------------------------------------
 // Axioms
 // --------------------------------------------------------
